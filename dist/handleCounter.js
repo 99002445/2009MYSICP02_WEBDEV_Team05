@@ -63,5 +63,49 @@
                 changeVal(num + 1)
             }
         })
+        var keyUpTime
+        $input.keyup(function () {
+            clearTimeout(keyUpTime)
+            keyUpTime = setTimeout(function() {
+                var num = $input.val()
+                if (num == ''){
+                    num = minimum
+                    $input.val(minimum)
+                }
+                var reg = new RegExp("^[\\d]*$")
+                if (isNaN(parseInt(num)) || !reg.test(num)) {
+                    $input.val($input.attr('data-num'))
+                    changeVal($input.attr('data-num'))
+                } else if (num < minimum) {
+                    $input.val(minimum)
+                    changeVal(minimum)
+                }else if (maximize!=null&&num > maximize) {
+                    $input.val(maximize)
+                    changeVal(maximize)
+                } else {
+                    changeVal(num)
+                }
+            },300)
+        })
+        $input.focus(function () {
+            var num = $input.val()
+            if (num == 0) $input.select()
+        })
 
+        function changeVal(num) {
+            $input.attr('data-num', num)
+            $btnMinus.prop('disabled', false)
+            $btnPlugs.prop('disabled', false)
+            if (num <= minimum) {
+                $btnMinus.prop('disabled', true)
+                onMinimum.call(this, num)
+            } else if (maximize!=null&&num >= maximize) {
+                $btnPlugs.prop('disabled', true)
+                onMaximize.call(this, num)
+            }
+            onChange.call(this, num)
+        }
+        return $handleCounter
+    };
+})(jQuery)
 
