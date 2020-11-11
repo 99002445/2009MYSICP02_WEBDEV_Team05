@@ -47,4 +47,21 @@
         if (!writable) {
             $input.prop('disabled', true)
         }
+                changeVal(inputVal)
+        $input.val(inputVal)
+        $btnMinus.click(function () {
+            var num = parseInt($input.val())
+            if (num > minimum) {
+                $input.val(num - 1)
+                changeVal(num - 1)
+            }
+        })
+        $btnPlugs.click(function () {
+            var num = parseInt($input.val())
+            if (maximize==null||num < maximize) {
+                $input.val(num + 1)
+                changeVal(num + 1)
+            }
+        })
+
 
