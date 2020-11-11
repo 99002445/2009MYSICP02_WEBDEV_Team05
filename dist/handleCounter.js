@@ -26,3 +26,25 @@
             onMinimum: function(){},
             onMaximize: function(){}
         }
+                var settings = $.extend({}, defaultOpts, options)
+        minimum = settings.minimum
+        maximize = settings.maximize
+        writable = settings.writable
+        onChange = settings.onChange
+        onMinimum = settings.onMinimum
+        onMaximize = settings.onMaximize
+        //validate minimum, reverting to default if needed
+        if (!$.isNumeric(minimum)) {
+            minimum = defaultOpts.minimum
+        }
+        if (!$.isNumeric(maximize)) {
+            maximize = defaultOpts.maximize
+        }
+        var inputVal = $input.val()
+        if (isNaN(parseInt(inputVal))) {
+            inputVal = $input.val(0).val()
+        }
+        if (!writable) {
+            $input.prop('disabled', true)
+        }
+
